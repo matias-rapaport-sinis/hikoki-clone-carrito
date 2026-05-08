@@ -10,7 +10,13 @@ function CartDrawer({ open, onClose }) {
           <span className="drawer__title">Carrito</span>
           <button className="drawer__close" onClick={onClose}>✕</button>
         </div>
-        <div className="drawer__body" />
+        <div className="drawer__body">
+          <iframe
+            src="https://www.infobae.com"
+            title="Carrito"
+            className="drawer__iframe"
+          />
+        </div>
       </aside>
     </>
   )
