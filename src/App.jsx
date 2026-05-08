@@ -1,6 +1,21 @@
 import { useState } from 'react'
 import './index.css'
 
+function CartDrawer({ open, onClose }) {
+  return (
+    <>
+      <div className={`drawer-overlay${open ? ' is-open' : ''}`} onClick={onClose} />
+      <aside className={`drawer${open ? ' is-open' : ''}`}>
+        <div className="drawer__header">
+          <span className="drawer__title">Carrito</span>
+          <button className="drawer__close" onClick={onClose}>✕</button>
+        </div>
+        <div className="drawer__body" />
+      </aside>
+    </>
+  )
+}
+
 const NAV = ['Productos', 'Accesorios', 'Consumibles', 'Tecnología', 'Historia']
 
 // ── Configuración de la API del carrito ──────────────────────────
@@ -66,7 +81,7 @@ const PRODUCTS = [
   },
 ]
 
-function Header() {
+function Header({ onCartOpen }) {
   return (
     <header className="header">
       <div className="header__inner">
@@ -82,6 +97,13 @@ function Header() {
             </a>
           ))}
         </nav>
+        <button className="cart-btn" onClick={onCartOpen} aria-label="Abrir carrito">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+        </button>
       </div>
     </header>
   )
@@ -134,9 +156,12 @@ function ProductCard({ product }) {
 }
 
 export default function App() {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
   return (
     <>
-      <Header />
+      <Header onCartOpen={() => setDrawerOpen(true)} />
+      <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <main className="page">
         <a className="breadcrumb" href="#">← Volver a categorías</a>
         <h1 className="page-title">Adaptadores</h1>
