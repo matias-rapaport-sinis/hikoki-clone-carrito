@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/carrito/:path*",
+      "destination": "https://leiten-carrito.vercel.app/:path*"
+    }
+  ]
+}
