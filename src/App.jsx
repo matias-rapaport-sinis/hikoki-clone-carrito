@@ -12,7 +12,7 @@ function CartDrawer({ open, onClose }) {
         </div>
         <div className="drawer__body">
           <iframe
-            src="https://www.infobae.com"
+            src="https://leiten-carrito-1778250011-bz11mrogg-leiten.vercel.app"
             title="Carrito"
             className="drawer__iframe"
           />
