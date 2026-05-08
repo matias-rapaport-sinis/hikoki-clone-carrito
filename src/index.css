@@ -153,3 +153,21 @@ nav { display: flex; }
   color: #888;
   font-weight: 400;
 }
+.add-to-cart-btn {
+  margin-top: 0.6rem;
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 2px solid #007749;
+  background: #fff;
+  color: #007749;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.add-to-cart-btn:hover:not(:disabled) { background: #007749; color: #fff; }
+.add-to-cart-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+.add-to-cart-btn--loading { border-color: #aaa; color: #aaa; }
+.add-to-cart-btn--ok { background: #007749; color: #fff; border-color: #007749; }
+.add-to-cart-btn--error { border-color: crimson; color: crimson; }

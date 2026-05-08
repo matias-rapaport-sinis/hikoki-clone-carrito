@@ -1,6 +1,25 @@
+import { useState } from 'react'
 import './index.css'
 
 const NAV = ['Productos', 'Accesorios', 'Consumibles', 'Tecnología', 'Historia']
+
+// ── Configuración de la API del carrito ──────────────────────────
+const CART_API_URL = 'https://TU_API_AQUI/carrito/agregar'  // reemplazar
+const CART_API_TOKEN = 'TU_TOKEN_AQUI'                       // reemplazar
+
+async function addToCartApi(codigo) {
+  const res = await fetch(CART_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${CART_API_TOKEN}`,
+    },
+    body: JSON.stringify({ codigo }),
+  })
+  if (!res.ok) throw new Error(`Error ${res.status}`)
+  return res.json()
+}
+// ─────────────────────────────────────────────────────────────────
 
 const PRODUCTS = [
   {
@@ -69,6 +88,27 @@ function Header() {
 }
 
 function ProductCard({ product }) {
+  const [status, setStatus] = useState('idle') // idle | loading | ok | error
+
+  async function handleAdd() {
+    setStatus('loading')
+    try {
+      await addToCartApi(product.id)
+      setStatus('ok')
+      setTimeout(() => setStatus('idle'), 1500)
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 2000)
+    }
+  }
+
+  const btnLabel = {
+    idle:    '+ Agregar al carrito',
+    loading: 'Agregando…',
+    ok:      '✓ Agregado',
+    error:   '✕ Error, reintentar',
+  }[status]
+
   return (
     <div className="card">
       <div className="card__image">
@@ -81,6 +121,13 @@ function ProductCard({ product }) {
           <span>U$S {product.price}</span>
           <span className="card__iva">+ 21%</span>
         </div>
+        <button
+          className={`add-to-cart-btn add-to-cart-btn--${status}`}
+          onClick={handleAdd}
+          disabled={status === 'loading'}
+        >
+          {btnLabel}
+        </button>
       </div>
     </div>
   )
